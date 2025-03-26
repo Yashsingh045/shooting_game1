@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import './App.css';
 
 // Basic Game Settings
-const soldierSpeed = 10; // Increased soldier speed
-const enemySpeed = 2; // Speed at which enemies move toward the soldier
+const soldierSpeed = 10;
+const enemySpeed = 1.8;
 const bulletSpeed = 10;
-const enemyFrequency = 200; // How often new enemies spawn
+const enemyFrequency = 200;
 
 function App() {
   // Game state
@@ -14,18 +14,18 @@ function App() {
   const [enemies, setEnemies] = useState([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false); // To track if the game has started
 
   const gameAreaRef = useRef(null);
 
-  // Enemy and Soldier images
+  // images
   const soldierImage = "./src/assets/photos/soldier.png"; 
   const enemyImage = "./src/assets/photos/enemy.png";
-
-  // Bullet image URL
   const bulletImage = "./src/assets/photos/bullet.png";
+
   // Movement logic
   const handleKeyDown = (e) => {
-    if (gameOver) return; // Disable controls when game is over
+    if (gameOver || !gameStarted) return; // Disable controls when game is over or not started
     const { x, y } = soldier;
 
     switch (e.key) {
@@ -65,7 +65,7 @@ function App() {
 
   // Spawn enemies
   useEffect(() => {
-    if (gameOver) return;
+    if (gameOver || !gameStarted) return; // Only spawn enemies when game is active
     const interval = setInterval(() => {
       const randomX = Math.floor(Math.random() * (gameAreaRef.current.offsetWidth - 50));
       setEnemies((prev) => [
@@ -74,11 +74,11 @@ function App() {
       ]);
     }, enemyFrequency);
     return () => clearInterval(interval);
-  }, [gameOver]);
+  }, [gameOver, gameStarted]);
 
   // Game loop: Move bullets and enemies
   useEffect(() => {
-    if (gameOver) return;
+    if (gameOver || !gameStarted) return;
 
     const gameInterval = setInterval(() => {
       // Move bullets
@@ -133,7 +133,7 @@ function App() {
           soldier.y + 50 > enemy.y
         ) {
           // Soldier gets hit, reduce health
-          setSoldier((prev) => ({ ...prev, health: prev.health - 10 }));
+          setSoldier((prev) => ({ ...prev, health: prev.health - 8 }));
           if (soldier.health <= 0) {
             setGameOver(true);
           }
@@ -142,13 +142,13 @@ function App() {
     }, 30);
 
     return () => clearInterval(gameInterval);
-  }, [bullets, enemies, soldier, gameOver]);
+  }, [bullets, enemies, soldier, gameOver, gameStarted]);
 
   // Listen for keydown events
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [soldier, gameOver]);
+  }, [soldier, gameOver, gameStarted]);
 
   // Reset game state
   const handleReplay = () => {
@@ -157,17 +157,31 @@ function App() {
     setEnemies([]);
     setScore(0);
     setGameOver(false);
+    setGameStarted(false); // Stop the game
+  };
+
+  const handlePlay = () => {
+    setGameStarted(true); // Start the game
   };
 
   return (
     <div className="App">
       <div className="gameArea" ref={gameAreaRef}>
+        {!gameStarted && !gameOver && (
+          <div className="playButton" onClick={handlePlay}>
+            Play
+          </div>
+        )}
+
         {gameOver && (
-          <div className="gameOver">
-            Game Over
-            <br />
-            Score: {score}
-            <br />
+          <div className="gameOver" >
+            <div className="gameOverMessage">
+              Game Over
+              <br />
+              <span style={{ color: 'red', fontSize: '18px' }}>Health: {soldier.health}</span>
+              <br />
+              <span style={{ color: 'gold', fontSize: '18px' }}>Score: {score}</span>
+            </div>
             <button className="replayButton" onClick={handleReplay}>
               Replay
             </button>
@@ -179,7 +193,7 @@ function App() {
           style={{ left: soldier.x, top: soldier.y, position: "absolute" }}
         >
           <img
-            src={soldierImage} // Soldier image
+            src={soldierImage}
             alt="Soldier"
             style={{ width: "70px", height: "70px" }}
           />
@@ -192,15 +206,15 @@ function App() {
             style={{
               left: bullet.x,
               top: bullet.y,
-              position: "absolute", 
-              width: "10px", 
-              height: "40px", 
+              position: "absolute",
+              width: "10px",
+              height: "40px",
             }}
           >
             <img
-              src={bulletImage} // Bullet image
+              src={bulletImage}
               alt="Bullet"
-              style={{ width: "12px", height: "40px" }} 
+              style={{ width: "12px", height: "40px" }}
             />
           </div>
         ))}
@@ -212,7 +226,7 @@ function App() {
             style={{ left: enemy.x, top: enemy.y, position: "absolute" }}
           >
             <img
-              src={enemyImage} 
+              src={enemyImage}
               alt="Enemy"
               style={{ width: "60px", height: "60px" }}
             />
