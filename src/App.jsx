@@ -19,9 +19,9 @@ function App() {
   const gameAreaRef = useRef(null);
 
   // images
-  const soldierImage = "./src/assets/photos/soldier.png"; 
-  const enemyImage = "./src/assets/photos/enemy.png";
-  const bulletImage = "./src/assets/photos/bullet.png";
+  const soldierImage = "/src/assets/photos/soldier.png"; 
+  const enemyImage = "/src/assets/photos/enemy.png";
+  const bulletImage = "/src/assets/photos/bullet.png";
 
   // Movement logic
   const handleKeyDown = (e) => {
@@ -148,7 +148,7 @@ function App() {
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [soldier, gameOver, gameStarted]);
+  }, );
 
   // Reset game state
   const handleReplay = () => {
