@@ -207,14 +207,14 @@ function App() {
               left: bullet.x,
               top: bullet.y,
               position: "absolute",
-              width: "10px",
+              width: "0px",
               height: "40px",
             }}
           >
             <img
               src={bulletImage}
               alt="Bullet"
-              style={{ width: "12px", height: "40px" }}
+              style={{ width: "8px", height: "30px" }}
             />
           </div>
         ))}
