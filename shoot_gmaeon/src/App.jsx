@@ -9,7 +9,7 @@ const enemyFrequency = 200;
 const winningScore = 250;
 
 function App() {
-  
+
   // Game state
   const [soldier, setSoldier] = useState({ x: 350, y: 500, health: 100 });
   const [bullets, setBullets] = useState([]);
@@ -22,9 +22,9 @@ function App() {
   const gameAreaRef = useRef(null);
 
   // images
-  const soldierImage = "./assets/photos/soldier.png"; 
-  const enemyImage = "./assets/photos/enemy.png";
-  const bulletImage = "./assets/photos/bullet.png";
+  const soldierImage = "./src/assets/photos/soldier.png"; 
+  const enemyImage = "/src/assets/photos/enemy.png";
+  const bulletImage = "./src/assets/photos/bullet.png";
 
   // Movement logic
   const handleKeyDown = (e) => {
