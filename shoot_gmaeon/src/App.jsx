@@ -22,9 +22,9 @@ function App() {
   const gameAreaRef = useRef(null);
 
   // images
-  const soldierImage = "/src/assets/photos/soldier.png"; 
-  const enemyImage = "/src/assets/photos/enemy.png";
-  const bulletImage = "/src/assets/photos/bullet.png";
+  const soldierImage = "./assets/photos/soldier.png"; 
+  const enemyImage = "./assets/photos/enemy.png";
+  const bulletImage = "./assets/photos/bullet.png";
 
   // Movement logic
   const handleKeyDown = (e) => {
