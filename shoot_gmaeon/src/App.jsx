@@ -226,7 +226,7 @@ function App() {
           style={{ left: soldier.x, top: soldier.y, position: "absolute" }}
         >
           <img
-            src={soldierImage}
+            src={"./src/assets/photos/soldier.png"}
             alt="Soldier"
             style={{ width: "70px", height: "70px" }}
           />
