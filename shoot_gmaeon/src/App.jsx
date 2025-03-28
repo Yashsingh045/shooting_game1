@@ -6,8 +6,10 @@ const soldierSpeed = 10;
 const enemySpeed = 1.8;
 const bulletSpeed = 10;
 const enemyFrequency = 200;
+const winningScore = 250;
 
 function App() {
+  
   // Game state
   const [soldier, setSoldier] = useState({ x: 350, y: 500, health: 100 });
   const [bullets, setBullets] = useState([]);
@@ -15,6 +17,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false); // To track if the game has started
+  const [wonWar, setWonWar] = useState(false); // To track if the player has won
 
   const gameAreaRef = useRef(null);
 
@@ -25,7 +28,7 @@ function App() {
 
   // Movement logic
   const handleKeyDown = (e) => {
-    if (gameOver || !gameStarted) return; // Disable controls when game is over or not started
+    if (gameOver || wonWar || !gameStarted) return; // Disable controls when game is over or not started or won
     const { x, y } = soldier;
 
     switch (e.key) {
@@ -65,7 +68,7 @@ function App() {
 
   // Spawn enemies
   useEffect(() => {
-    if (gameOver || !gameStarted) return; // Only spawn enemies when game is active
+    if (gameOver || !gameStarted || wonWar) return; // Only spawn enemies when game is active
     const interval = setInterval(() => {
       const randomX = Math.floor(Math.random() * (gameAreaRef.current.offsetWidth - 50));
       setEnemies((prev) => [
@@ -74,11 +77,11 @@ function App() {
       ]);
     }, enemyFrequency);
     return () => clearInterval(interval);
-  }, [gameOver, gameStarted]);
+  }, [gameOver, gameStarted, wonWar]);
 
   // Game loop: Move bullets and enemies
   useEffect(() => {
-    if (gameOver || !gameStarted) return;
+    if (gameOver || !gameStarted || wonWar) return;
 
     const gameInterval = setInterval(() => {
       // Move bullets
@@ -139,16 +142,22 @@ function App() {
           }
         }
       });
+
+      // Check if score reaches the winning score
+      if (score >= winningScore) {
+        setWonWar(true);
+        setGameOver(true);
+      }
     }, 30);
 
     return () => clearInterval(gameInterval);
-  }, [bullets, enemies, soldier, gameOver, gameStarted]);
+  }, [bullets, enemies, soldier, gameOver, gameStarted, score, wonWar]);
 
   // Listen for keydown events
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, );
+  },);
 
   // Reset game state
   const handleReplay = () => {
@@ -157,6 +166,7 @@ function App() {
     setEnemies([]);
     setScore(0);
     setGameOver(false);
+    setWonWar(false); // Reset the won war flag
     setGameStarted(false); // Stop the game
   };
 
@@ -167,18 +177,41 @@ function App() {
   return (
     <div className="App">
       <div className="gameArea" ref={gameAreaRef}>
-        {!gameStarted && !gameOver && (
-          <div className="playButton" onClick={handlePlay}>
-            Play
+        {/* Show instructions before the game starts */}
+        {!gameStarted && !gameOver && !wonWar && (
+          <>
+            <h2 className="head">Shooting Game</h2>
+          <div className="instructions">
+            <p>Press Space to Shoot</p>
+            <p>Use Arrow Keys to Move</p>
           </div>
+            <div className="playButton" onClick={handlePlay}>
+              Play
+            </div>
+          </>
         )}
 
-        {gameOver && (
-          <div className="gameOver" >
+        {/* Show game over or win message */}
+        {gameOver && !wonWar && (
+          <div className="gameOver">
             <div className="gameOverMessage">
               Game Over
               <br />
               <span style={{ color: 'red', fontSize: '18px' }}>Health: {soldier.health}</span>
+              <br />
+              <span style={{ color: 'gold', fontSize: '18px' }}>Score: {score}</span>
+            </div>
+            <button className="replayButton" onClick={handleReplay}>
+              Replay
+            </button>
+          </div>
+        )}
+
+        {/* Show "You won the war" message */}
+        {wonWar && (
+          <div className="gameOver">
+            <div className="gameOverMessage">
+              Congratulations, You Won the War!
               <br />
               <span style={{ color: 'gold', fontSize: '18px' }}>Score: {score}</span>
             </div>

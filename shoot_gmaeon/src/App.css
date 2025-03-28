@@ -3,6 +3,12 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-image: url("https://patchnotes.cdn.gaijin.net/crossout/Images/helicopters-kv-bg.jpg");
+  /* background-image: url("https://images.hdqwalls.com/wallpapers/battlefield-1-video-game-4k-qb.jpg"); */
+  /* background-image: url("https://s1.1zoom.me/big0/266/Battlefield_1_Rain_Ruins_War_523662_1280x540.jpg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+
 }
 
 .gameArea {
@@ -12,6 +18,13 @@
   position: relative;
   overflow: hidden;
   border: 2px solid white;
+  opacity: 1;
+  background-image: url("https://c4.wallpaperflare.com/wallpaper/743/117/81/battlefield-1-battlefield-war-video-games-wallpaper-preview.jpg");
+  /* background-image: url("https://images.hdqwalls.com/wallpapers/battlefield-1-video-game-4k-qb.jpg"); */
+  /* background-image: url("https://xbox-store-checker.com/assets/upload/game/2018/11/optimize/bph5dpgljb42-background.jpg"); */
+
+  background-size: cover;
+
 }
 
 .soldier {
@@ -89,6 +102,7 @@
   color: white;
   padding: 20px;
   border-radius: 10px;
+  z-index: 1;
 }
 
 .replayButton {
@@ -101,4 +115,39 @@
   border-radius: 10px;
   display: block;
   margin: 10px auto;
+}
+
+
+.instructions {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+
+.instructions p {
+  margin: 10px 0;
+}
+
+.instructions .playButton {
+  margin-top: 20px;
+}
+
+
+.head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  opacity: 0.6;
 }
