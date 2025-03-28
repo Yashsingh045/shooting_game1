@@ -22,9 +22,9 @@ function App() {
   const gameAreaRef = useRef(null);
 
   // images
-  const soldierImage = "./src/assets/photos/soldier.png"; 
-  const enemyImage = "/src/assets/photos/enemy.png";
-  const bulletImage = "./src/assets/photos/bullet.png";
+  const soldierImage = "https://media-hosting.imagekit.io/4af1622961934c90/soldier.png?Expires=1837793156&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=Oei-kOaxn8qC-4Ft0RayTbIbbNIC51Xh9tX6ZBzN8Ii7qaq1ACbsRoMPPXpQD4P-QBd0mcRLUNKnJvXgjTYYVnBt5JMsUxsO3pZawpKzAgmtj7VpCU1lkldfTK70DAc0YMH6R4DCkaLuoAlnq3FiXrDUaOO12iXrgU54-b9HxCSkigGfv~efz0lV7cS3ILdHMxhNcY6O1VUyeaPZUB1VtZ6FZGQy6dFeFgDqWJFWmNrLXNf8KM2ce6aQpwt389JXi~6DlcmH0xvutVSIJWbEzYYsqW4kN5VEoCeMKo7IsAYskUi1s9MUJt-ckM~QQG9USjxVNfY6FT45rmroR1Bf0w__"; 
+  const enemyImage = "https://media-hosting.imagekit.io/ad9bb4c6bc2e4c75/enemy.png?Expires=1837793090&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=C-z2TKhcEYMAukC5U6z0hIZVjueeyRTgcjiEj9GFTXtKH7Zvkl82hy1RARYu9FWrEn2PXBOE-i0CX2Bt2n8q5vZALlLok~TTLdZlt3tFuetAmz0qoeSzXABZxeyzq0Qks81No1aMaFxtGIOX58ERqF106uKGY-8to18ZTzpXS1pj-~NbYN5WqhhoNacMcjSvdhcll-Sjikg17SBWq0Div8WuKge1w3o9ZqMblgoupPXhdIq41ssbcCVVUzk6ZLLVEAO28AGHBMErPKB2olsRZjK9gVnFrmvT9ry0MehzwaIaVfnD4Ynn8SnIuKpZzzpHJ52kH7x7MBRL7r0X4kycLA__";
+  const bulletImage = "https://media-hosting.imagekit.io/e77445685ecb42db/bullet.png?Expires=1837792660&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=xEGz9L1aXX5skRAI6OuAts1lEMQXBEhFS9rEKw0bfhe2nEmOvjBqRwO8fQObkxDKcP-m3dWRJ3UmMk~NBHbXr~cmTkhhSO06TZz9druq2anvT0Yrb4BjvJtc7sASFBTSw5~ksGB1R52w6Lfbic2pR11mzz2HcIllYeEIc~1~5X3-uvNi1f2q40qETfMB68c6HAw3Z25CisCbaB0W2N4L-hyhI3pHPwAtBZFWYLtRcUDZsa-jlcZDXGit8yIMmwGJj1Fnc0baZHb5iOW4ZgZXeE97hcc2uYNyUZyU1sOIoKgZ4ilxaDdQ2bPmZMp2XaLeg-Sbl1XC8-hKRb47MQsm0A__"
 
   // Movement logic
   const handleKeyDown = (e) => {
@@ -226,7 +226,7 @@ function App() {
           style={{ left: soldier.x, top: soldier.y, position: "absolute" }}
         >
           <img
-            src={"./src/assets/photos/soldier.png"}
+            src={soldierImage}
             alt="Soldier"
             style={{ width: "70px", height: "70px" }}
           />
